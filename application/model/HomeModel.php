@@ -6,22 +6,23 @@ class HomeModel extends \Application\Model\ModelCore
 	protected $table;
 	public function __construct(){
 		parent::__construct();
-		$this->table = "view";
+		$this->table = "site_content";
 	}
 	
 	/**
-	 * Gets the generic view stuff
+	 * Gets the view
 	 * 
-	 * @param	[string]
+	 * @param	string
 	 * @author	sbebbington
-	 * @date	13 Jan 2017 - 10:13:07
+	 * @date	27 Feb 2017 - 17:16:09
 	 * @version	0.0.1
 	 * @return	array
 	 * @todo
 	 */
-	public function getView($colName = 'home'){
-		$query	= "SELECT `header`, `sub_header`, `content` FROM `{$this->db}`.`{$this->table}` "
-				."WHERE `name`=?;";
+	public function getView(string $segment = 'home'){
+		$query	= "SELECT `title`, `strap`, `body`, `notes`, `medium`"
+				. "FROM `{$this->db}`.`{$this->table}` "
+				. "WHERE `segment`=?;";
 		$result	= $this->connection->prepare($query);
 		$result->execute(array($colName));
 		return $result->fetch(PDO::FETCH_ASSOC);
